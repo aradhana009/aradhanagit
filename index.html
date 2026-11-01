@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html ng-app="courseApp">
+
+<head>
+    <title>Course Registration System</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-controller="courseController">
+
+    <div class="container">
+
+        <h1>Course Registration System</h1>
+
+        <h2>{{ isEditing ? 'Edit Course' : 'Add New Course' }}</h2>
+
+        <form ng-submit="saveCourse()" novalidate>
+
+            <label>Course ID:</label>
+            <input type="number" ng-model="form.courseId" ng-disabled="isEditing" required>
+
+            <label>Course Code:</label>
+            <input type="text" ng-model="form.courseCode" ng-disabled="isEditing" required>
+
+            <label>Course Name:</label>
+            <input type="text" ng-model="form.courseName" ng-disabled="isEditing" required>
+
+            <label>Credits:</label>
+            <input type="number" ng-model="form.credits" required>
+
+            <label>Capacity:</label>
+            <input type="number" ng-model="form.capacity" required>
+
+            <button type="submit">
+                {{ isEditing ? 'Update Course' : 'Add Course' }}
+            </button>
+
+            <button type="button" ng-if="isEditing" ng-click="cancelEdit()">
+                Cancel
+            </button>
+
+        </form>
+
+        <p>{{ message }}</p>
+
+        <h2>All Courses</h2>
+
+        <button ng-click="getCourses()">Refresh Courses</button>
+
+        <table border="1">
+
+            <tr>
+                <th>Course ID</th>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+                <th>Capacity</th>
+                <th>Action</th>
+            </tr>
+
+            <tr ng-repeat="course in courses">
+
+                <td>{{ course.courseId }}</td>
+                <td>{{ course.courseCode }}</td>
+                <td>{{ course.courseName }}</td>
+                <td>{{ course.credits }}</td>
+                <td>{{ course.capacity }}</td>
+
+                <td>
+                    <button ng-click="editCourse(course)">
+                        Edit
+                    </button>
+                </td>
+
+            </tr>
+
+            <tr ng-if="courses.length === 0">
+                <td colspan="6">No courses found.</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
